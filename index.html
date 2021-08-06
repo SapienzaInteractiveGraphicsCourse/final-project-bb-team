@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Tesseract collection</title>
+		<link rel="stylesheet" type="text/css" href="css/game.css"/>
+		<style>
+			body { margin: 0; }
+			canvas {display: block;}
+		</style>
+	</head>
+	<body>
+		<div id="loading">
+			<div class="header">
+				<h1 style="font-family: courier; font-size: 300%; color: black">Tesseract Hunt</h1>
+			</div>
+			<div class="play">
+				<span style="font-family: courier; font-size: 100%; color: black;">Press<b style="color: red"> ENTER</b> to play</span>
+			</div>
+			<div class="howtoplay" style="font-size: 100%; font-family: courier; color: black;">
+				<h2>How to play:</h2>
+				<span><b style="color: red;">A</b> to go left</span><br/>
+				<span><b style="color: red">D</b> to go right</span><br/>
+				<span><b style="color: red">SPACE</b> to jump</span>
+			</div>
+			<div>
+				<p class="credit" style="font-family: courier; font-size: 60%">Credits: Gianmarco Bracalello and Jessica Brandi</p>
+			</div>
+		</div>	
+		<div class="header" style='visibility: hidden;'><br/><br/><br/><br/><br/>
+			
+			<div class="wrapper" id="score" style="text-align: center">
+				<div class="level-content" id="level" style="display: inline-block;">
+					<div class="score-label" style="font-family: courier; font-size: 100%; font-weight: bold;" >level</div>
+					<div class="score-value--level" id="levelValue" style="font-family: courier; font-size: 80%; font-weight: bold;">1</div>
+				</div>
+				<div class="dist-content" id="dist" style="display: inline-block;">
+					<div class="score-label" style="font-family: courier; font-size: 100%; font-weight: bold;">distance</div>
+					<div class="score-value--distance" id="distValue" style="font-family: courier; font-size: 80%; font-weight: bold;">000</div>
+				</div>
+				<div class="energy-content" id="energy" style="display: inline-block;">
+					<div class="score-label" style="font-family: courier; font-size: 100%; font-weight: bold;">energy</div>
+					<div class="score-value--energy" id="energyValue" style="font-family: courier; font-size: 80%; font-weight: bold;">100</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/tween.umd.js"></script>
+		<script type="module">
+			
+			import * as THREE from './js/three.js-master/build/three.module.js'
+			//import {GLTFLoader} from './js/three.js-master/examples/jsm/loaders/GLTFLoader.js'
+			import Game from './js/game.js'
+			import Tesseract from './js/models/objects.js'
+			
+			//Scene and Camera
+			var scene = new THREE.Scene;
+			var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+			camera.position.z = 5;
+			camera.lookAt(new THREE.Vector3(0, 0, 0));
+						
+			//Renderer
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight);
+			renderer.setClearColor(0x404040, 1);
+			document.body.appendChild(renderer.domElement);
+			
+			const loader = new THREE.TextureLoader();
+			loader.load('textures/background.jpeg', function(texture){
+				scene.background = texture;
+			});
+			
+			//document.getElementById('playing').style.visibility = 'hidden';
+			
+			var tesseract = new Tesseract();
+			tesseract.load(scene);
+			
+			//Lights: directional for the sun, ambient for the diffuse 
+			//lighting and point in the tesseract
+			const ambLight = new THREE.AmbientLight(0xffffff, 1);
+			scene.add(ambLight);
+			
+			const light = new THREE.DirectionalLight(0xffffff, 1);
+			light.position.set(0,5,0);
+			scene.add(light);
+			
+			const pntLight = new THREE.PointLight(0xffffff, 2);
+			pntLight.position.set(0,0,0);
+			scene.add(pntLight);
+			
+			var game = new Game(scene, camera, renderer, tesseract);
+			var play = false;
+			
+			document.addEventListener("keydown", function(event){
+				//Go to playing page
+				if(event.key == 'Enter'){
+					scene.remove(scene.getObjectByName("Tesseract"));
+					document.getElementById('loading').style.visibility = "hidden";
+					document.getElementsByClassName('header')[0].style.visibility = 'visible';
+					document.getElementsByClassName('header')[1].style.visibility = 'visible';
+					play = true;
+				}
+			});
+			
+			function animate(){
+				//console.log(play);
+				if (play) game.init();
+				TWEEN.update();
+				renderer.render(scene, camera);
+				requestAnimationFrame(animate);
+			}
+			animate();
+			
+		</script>
+		
+	</body>
+</html>
