@@ -1,0 +1,11 @@
+Model Information:
+* title:	Dirty car
+* source:	https://sketchfab.com/3d-models/dirty-car-da77a8c75ddd4d7a8391912ba35735b8
+* author:	ueharu1512 (https://sketchfab.com/ueharu1512)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Dirty car" (https://sketchfab.com/3d-models/dirty-car-da77a8c75ddd4d7a8391912ba35735b8) by ueharu1512 (https://sketchfab.com/ueharu1512) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
