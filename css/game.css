@@ -1,0 +1,46 @@
+.header {
+	position: absolute;
+	top: 5vh;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	pointer-events: none;
+}
+
+
+.play {
+	position: absolute;
+	bottom: 20vh;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	pointer-events: none;
+}
+
+.howtoplay {
+	position: absolute;
+	bottom: 3vh;
+	right: 2vh;
+	width: 100%;
+	text-align: right;
+	pointer-events: none;
+}
+
+.credit {
+	position: absolute;
+	bottom: 0vh;
+	left: 4vh;
+	text-align: left;
+	pointer-events: none;
+}
+
+#loading {
+	background: url('https://static.vecteezy.com/ti/vettori-gratis/p1/602518-fondo-di-paesaggio-urbano-della-siluetta-delle-costruzioni-architettura-moderna-paesaggio-urbano-della-citta-gratuito-vettoriale.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	top: 0;
+	left: 0;
+	height: 100%;
+	z-index: 9999999;
+}
