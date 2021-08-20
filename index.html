@@ -44,13 +44,14 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript" src="js/three.min.js"></script>
 		<script src="js/tween.umd.js"></script>
 		<script type="module">
 			
-			import * as THREE from './js/three.js-master/build/three.module.js'
-			//import {GLTFLoader} from './js/three.js-master/examples/jsm/loaders/GLTFLoader.js'
 			import Game from './js/game.js'
 			import Tesseract from './js/models/objects.js'
+			import CapAmerica from './js/models/cap.js'
+			import Car from './js/models/objects.js'
 			
 			//Scene and Camera
 			var scene = new THREE.Scene;
@@ -60,39 +61,47 @@
 						
 			//Renderer
 			var renderer = new THREE.WebGLRenderer();
-			renderer.setSize( window.innerWidth, window.innerHeight);
 			renderer.setClearColor(0x404040, 1);
+			renderer.setSize( window.innerWidth, window.innerHeight);
 			document.body.appendChild(renderer.domElement);
 			
-			const loader = new THREE.TextureLoader();
+			// Load background texture
+			var loader = new THREE.TextureLoader();
 			loader.load('textures/background.jpeg', function(texture){
 				scene.background = texture;
 			});
 			
 			//document.getElementById('playing').style.visibility = 'hidden';
+
+			
+			// Lights: directional for the sun, ambient for the diffuse 
+			// lighting and point in the tesseract
+			var ambLight = new THREE.AmbientLight(0xffffff, 1);
+			scene.add(ambLight);
+			
+			var light = new THREE.DirectionalLight(0xffffff, 1);
+			light.position.set(0,5,0);
+			scene.add(light);
+			
+			var pntLight = new THREE.PointLight(0xffffff, 2);
+			pntLight.position.set(0,0,0);
+			scene.add(pntLight);
+
 			
 			var tesseract = new Tesseract();
 			tesseract.load(scene);
 			
-			//Lights: directional for the sun, ambient for the diffuse 
-			//lighting and point in the tesseract
-			const ambLight = new THREE.AmbientLight(0xffffff, 1);
-			scene.add(ambLight);
+			var capamerica = new CapAmerica();
+			capamerica.load(scene);
 			
-			const light = new THREE.DirectionalLight(0xffffff, 1);
-			light.position.set(0,5,0);
-			scene.add(light);
-			
-			const pntLight = new THREE.PointLight(0xffffff, 2);
-			pntLight.position.set(0,0,0);
-			scene.add(pntLight);
-			
+
 			var game = new Game(scene, camera, renderer, tesseract);
 			var play = false;
 			
 			document.addEventListener("keydown", function(event){
 				//Go to playing page
 				if(event.key == 'Enter'){
+
 					scene.remove(scene.getObjectByName("Tesseract"));
 					document.getElementById('loading').style.visibility = "hidden";
 					document.getElementsByClassName('header')[0].style.visibility = 'visible';
@@ -106,10 +115,10 @@
 				if (play) game.init();
 				TWEEN.update();
 				renderer.render(scene, camera);
-				requestAnimationFrame(animate);
+				requestAnimationFrame(animate);	
 			}
 			animate();
-			
+
 		</script>
 		
 	</body>

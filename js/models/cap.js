@@ -1,5 +1,4 @@
-import {GLTFLoader} from '../three.js-master/examples/jsm/loaders/GLTFLoader.js'
-import * as THREE from '../three.js-master/build/three.module.js'
+import {GLTFLoader} from '../GLTFLoader.js'
 
 export default class CapAmerica {
 	
@@ -34,7 +33,10 @@ export default class CapAmerica {
 		loader.load('./models/captain_america/scene.gltf', function(gltf){
 			console.log(gltf);
 			model = gltf.scene;
-			model.scale.set(.005, .005, .005);
+			model.scale.set(20.0, 20.0, 20.0);
+			model.rotateY(22);
+			model.translateY(-1.6);
+			model.translateZ(-2.6);
 			model.name = 'CapAmerica';
 			scene.add(model);
 		}, function(xhr){

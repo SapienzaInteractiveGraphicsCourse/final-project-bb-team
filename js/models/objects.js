@@ -1,6 +1,4 @@
-import {GLTFLoader} from '../three.js-master/examples/jsm/loaders/GLTFLoader.js'
-import * as THREE from '../three.js-master/build/three.module.js'
-
+import {GLTFLoader} from '../GLTFLoader.js'
 
 export default class Tesseract {
 	
