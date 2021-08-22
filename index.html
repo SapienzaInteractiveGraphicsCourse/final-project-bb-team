@@ -91,24 +91,35 @@
 			var tesseract = new Tesseract();
 			tesseract.load(scene);
 			
-			var capamerica = new CapAmerica();
-			capamerica.load(scene);
-			
 
 			var game = new Game(scene, camera, renderer, tesseract);
 			var play = false;
 			
 			document.addEventListener("keydown", function(event){
 				//Go to playing page
-				if(event.key == 'Enter'){
+				var capamerica = new CapAmerica();
+				if (event.key == 'Enter'){
 
 					scene.remove(scene.getObjectByName("Tesseract"));
 					document.getElementById('loading').style.visibility = "hidden";
 					document.getElementsByClassName('header')[0].style.visibility = 'visible';
 					document.getElementsByClassName('header')[1].style.visibility = 'visible';
 					play = true;
+					
+					
+					capamerica.load(scene);
+					
 				}
+				if (event.key == 'a' || event.key == 'd') 
+					capamerica.move(event.key, scene);
+				if (event.key == ' ')
+					capamerica.jump(scene);
+
+		
+		
+				
 			});
+			
 			
 			function animate(){
 				//console.log(play);

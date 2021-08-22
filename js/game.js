@@ -46,6 +46,7 @@ export default class Game {
 		this.worldMesh.add(street);
 		this.scene.add(street); 
 		
+		
 		//this.distanceForSpeedUpdate = 50
 		//var distance = 0;
 		this.play();
@@ -66,5 +67,7 @@ export default class Game {
 			
 		});
 		tween.start();
+		
+		
 	}
 }
