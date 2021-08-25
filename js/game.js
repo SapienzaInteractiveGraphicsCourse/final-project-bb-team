@@ -30,22 +30,26 @@ export default class Game {
 			this.worldTexture = texture;
 			
 		});
+
 	}
 	
 	init(){
 
 		//this.renderer.render(this.scene, this.camera);
 		
-		var geometry = new THREE.CylinderGeometry(2.8, 2.8, 15, 50, 10);
+		var geometry = new THREE.CylinderGeometry(3.5, 3.5, 18, 50, 10);
 		var material = new THREE.MeshBasicMaterial({map: this.worldTexture});
 		var street = new THREE.Mesh(geometry, material);
 		street.name = 'Street';
 		
-		street.position.y = -4.5;
+		street.position.y = -6.5;
 		street.rotation.z = Math.PI/2;
 		this.worldMesh.add(street);
-		this.scene.add(street); 
+		this.scene.add(street);
 		
+
+		//this.camera.position.y = 3;
+		//this.camera.position.z = 7;
 		
 		//this.distanceForSpeedUpdate = 50
 		//var distance = 0;

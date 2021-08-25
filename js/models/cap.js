@@ -33,10 +33,10 @@ export default class CapAmerica {
 		loader.load('./models/captain_america/scene.gltf', function(gltf){
 			console.log(gltf);
 			model = gltf.scene;
-			model.scale.set(15.0, 15.0, 15.0);
+			model.scale.set(10.0, 10.0, 10.0);
 			model.rotateY(22);
 			model.translateY(-1.6);
-			model.translateZ(-2.6);
+			model.translateZ(-2.8);
 			model.name = 'CapAmerica';
 			scene.add(model);
 		}, function(xhr){
@@ -47,27 +47,25 @@ export default class CapAmerica {
 	}
 	
 	move(cmd, scene){
-		if (cmd == 'a') scene.getObjectByName("CapAmerica").translateX(1.3);
-		if (cmd == 'd') scene.getObjectByName("CapAmerica").translateX(-1.3);
+		var cap = scene.getObjectByName("CapAmerica");
+
+		if (cmd == 'a') {
+			cap.translateX(1.3);
+		}
+		if (cmd == 'd') {
+			cap.translateX(-1.3);
+		}
 	}
 	
 	jump(scene){
 		var cap = scene.getObjectByName("CapAmerica");
-		var start = { x: cap.position.x, y: cap.position.y, z: cap.position.z };
-		var end = { x: cap.position.x, y: cap.position.y - 0.05, z: cap.position.z };
-		var jumpTween = new TWEEN.Tween(start).to(end).delay(300);
-		jumpTween.onUpdate(function(){
-			cap.position.y = cap.position.y - 0.05;
 
-		})
-		var up = { x: cap.position.x, y: cap.position.y, z: cap.position.z };
-		var down = { x: cap.position.x, y: cap.position.y + 0.005, z: cap.position.z };
-		var retTween = new TWEEN.Tween(up).to(down);
-		retTween.onUpdate(function(){
-			cap.position.y = cap.position.y + 0.05;
-		})
-		jumpTween.start();
-		retTween.start();
+		var jumpTween1 = new TWEEN.Tween(cap.position).to({y: cap.position.y + 0.9}, 700).easing(TWEEN.Easing.Quadratic.Out);
+        var jumpTween2 = new TWEEN.Tween(cap.position).to({y: cap.position.y}, 700).easing(TWEEN.Easing.Quadratic.In);
+
+        jumpTween1.chain(jumpTween2);
+
+        jumpTween1.start();
 
 	}
 	
