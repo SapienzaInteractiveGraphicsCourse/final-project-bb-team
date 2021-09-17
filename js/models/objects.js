@@ -1,85 +1,90 @@
 import {GLTFLoader} from '../GLTFLoader.js'
 
-export default class Tesseract {
-	
-	/*constructor(mesh){
-		this.mesh = new THREE.Mesh(
-			new THREE.BoxGeometry(20, 20, 20),
-			new THREE.MeshBasicMaterial({
-				opacity: 0.0,
-				transparent: true
-			})
-		)//.add(this.mesh)
-		//this.id = this.mesh.id
-	}*/
-	/*move(){
-			var start = { x: 0, y: 0, z: 0, rotation: 0 };
-			var end = { x: 0, y: 0, z: 0, rotation: 90 };
-			var	tween = new TWEEN.Tween( start ).to( end, 500 ).repeat(Infinity);
-			tween.onUpdate(function(){
-				if(model){
-					//root.rotation.x = this.rotation;
-					model.rotateOnWorldAxis(new THREE.Vector3(1,0,0), 0.01);
-					model.rotateOnWorldAxis(new THREE.Vector3(0,1,0), 0.01);
-					//root.rotation.y = start.rotation;
-					
-				}
-			});
-			
-			tween.start();
-			
-	}*/
-	
-    async load(scene) {
-		var model;
-		const loader = new GLTFLoader();
-			loader.load('./models/tesseract_cube/scene.gltf', function(gltf) {
-			console.log(gltf);
-			model = gltf.scene;
-            model.scale.set(.008, .008, .008);
-			model.name = 'Tesseract';
-			scene.add(model);
-   		}, function(xhr){
-			console.log((xhr.loaded/xhr.total * 100) + "% loaded");
-		}, function(error){
-			console.log("[Tesseract Load Function]: An error occurred");
-   		})
-		
-		var start = { x: 0, y: 0, z: 0, rotation: 0 };
-		var end = { x: 0, y: 0, z: 0, rotation: 90 };
-		var	tween = new TWEEN.Tween( start ).to( end, 500 ).repeat(Infinity);
-		tween.onUpdate(function(){
-			if(model){
-				model.rotateOnWorldAxis(new THREE.Vector3(1,0,0), 0.01);
-				model.rotateOnWorldAxis(new THREE.Vector3(0,1,0), 0.01);
-				
-			}
-		});	
-		tween.start();		
-	} 
- }
  
  export class Car {
+	 
+	 constructor(mesh){
+	 	this.mesh = new THREE.Mesh(
+	 		new THREE.BoxGeometry(15, 10, 20),
+			new THREE.MeshBasicMaterial({opacity: 0.0, transparent: true})	
+	 	).add(mesh)
+		this.id = mesh.id;
+	 }
+	 
+	 move(){return}
+	 
+	 catch (callback){
+		 callback();
+	 }
  	
-	async load(scene){
+	 static async load(){
+	 	var loader = new GLTFLoader();
+		return new Promise((resolve, reject) => {
+			loader.load('./models/dirty_car/scene.gltf', object => {
+				var mesh = object.scene;
+	 			console.log(object);
+	 			mesh.scale.set(.005, .005, .005);
+				//model.visible = false;
+				mesh.rotation.z = - Math.PI/2;
+				mesh.position.x = 3.4;
+	 			mesh.name = 'Car';
+				resolve(mesh);
+			}, null, reject);
+		}); 
+	 }
+	 
+	 /*{
+		var model;
  		const loader = new GLTFLoader();
  		loader.load('./models/dirty_car/scene.gltf', function(gltf){
  			console.log(gltf);
- 			var model = gltf.scene;
- 			model.scale.set(.003, .003, .003);
+ 			model = gltf.scene;
+ 			model.scale.set(.005, .005, .005);
+			model.visible = false;
+			model.rotation.z = - Math.PI/2;
+			model.position.set(3.4, 2.5, 0);
  			model.name = 'Car';
- 			scene.add(model);
+ 			//scene.add(model);
 		}, function(xhr){
 			console.log((xhr.loaded/xhr.total * 100) + "% loaded");
 		}, function(error){
 			console.log("[Car Load Function]: An error occurred");
-		})
-	}
+		});
+		
+		
+	}*/
+
  }
  
  export class PoliceCar {
  	
-	 async load(scene){
+	 constructor(mesh){
+	 	this.mesh = new THREE.Mesh(
+	 		new THREE.BoxGeometry(15, 10, 20),
+			new THREE.MeshBasicMaterial({opacity: 0.0, transparent: true})	
+	 	).add(mesh)
+		this.id = mesh.id;
+	 }
+	 
+	 move(){return}
+	 
+	 catch (callback){
+		 callback();
+	 }
+	 
+	 static async load(){
+		var loader = new GLTFLoader();
+ 		return new Promise((resolve, reject) => {
+ 			loader.load('./models/police_car/scene.gltf', object => {
+ 				var mesh = object.scene;
+				console.log(object);
+				mesh.scale.set(.005, .005, .005);
+				mesh.name = 'PoliceCar';
+				resolve(mesh);
+ 			}, null, reject);
+		});
+	 }
+	/* async load(scene){
 		 const loader = new GLTFLoader();
 		 loader.load('./models/police_car/scene.gltf', function(gltf){
 			 console.log(gltf);
@@ -92,7 +97,7 @@ export default class Tesseract {
 		 }, function(error){
 			 console.log("[PoliceCar Load Function]: An error occurred");
 		 });
-	 }
+	 }*/
  }
  
  export class Taxi {

@@ -49,9 +49,9 @@
 		<script type="module">
 			
 			import Game from './js/game.js'
-			import Tesseract from './js/models/objects.js'
+			import Tesseract from './js/models/tesseract.js'
 			import CapAmerica from './js/models/cap.js'
-			import Car from './js/models/objects.js'
+			//import Car from './js/models/objects.js'
 			
 			//Scene and Camera
 			var scene = new THREE.Scene;
@@ -88,47 +88,66 @@
 			scene.add(pntLight);
 
 			
+			
 			var tesseract = new Tesseract();
 			tesseract.load(scene);
+			//if (tesseract) tesseract.move();
 			
-
+			
 			var game = new Game(scene, camera, renderer, tesseract);
-			var play = false;
+			//var play = false;
 			
-			document.addEventListener("keydown", function(event){
+			var play;
+			//var action = '';
+			//var capamerica;
+			//var groupStr = new TWEEN.Group();
+			//var groupCap = new TWEEN.Group();
+			
+			/*document.addEventListener("keydown", function(event){
+			
+				play = false; 
+				
 				//Go to playing page
-				var capamerica = new CapAmerica();
+				//capamerica = new CapAmerica();
 				if (event.key == 'Enter'){
-
+					
 					scene.remove(scene.getObjectByName("Tesseract"));
 					document.getElementById('loading').style.visibility = "hidden";
 					document.getElementsByClassName('header')[0].style.visibility = 'visible';
 					document.getElementsByClassName('header')[1].style.visibility = 'visible';
+					//game = new Game(scene, camera, renderer, tesseract);
+					//cap.visible = true;
+					//capamerica.load(scene);
+					game.init();
+					
+					//scene.getObjectByName("CapAmerica").visible = true;
+					scene.getObjectByName("Car").visible = true;
 					play = true;
-					
-					
-					capamerica.load(scene);
-					
-				}
-				if (event.key == 'a' || event.key == 'd') 
-					capamerica.move(event.key, scene);
-				if (event.key == ' ')
-					capamerica.jump(scene);
-
-		
-		
-				
-			});
 			
+					//game.play();
+					
+				}		
+			});*/
+			
+			animate();
 			
 			function animate(){
 				//console.log(play);
-				if (play) game.init();
+				requestAnimationFrame(animate);	
+				//game.update();
+				if (play) {
+					
+					//game.play();
+					game.update();
+					
+				}
+				//groupStr.update();
+				//groupCap.update();
 				TWEEN.update();
 				renderer.render(scene, camera);
-				requestAnimationFrame(animate);	
+				
 			}
-			animate();
+			
 
 		</script>
 		
