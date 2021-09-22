@@ -50,13 +50,13 @@
 			
 			import Game from './js/game.js'
 			import Tesseract from './js/models/tesseract.js'
-			import CapAmerica from './js/models/cap.js'
+			import IronMan from './js/models/ironman.js'
 			//import Car from './js/models/objects.js'
 			
 			//Scene and Camera
 			var scene = new THREE.Scene;
 			var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-			camera.position.z = 5;
+			camera.position.z = -5;
 			camera.lookAt(new THREE.Vector3(0, 0, 0));
 						
 			//Renderer
@@ -97,7 +97,7 @@
 			var game = new Game(scene, camera, renderer, tesseract);
 			//var play = false;
 			
-			var play;
+			//var play;
 			//var action = '';
 			//var capamerica;
 			//var groupStr = new TWEEN.Group();
@@ -135,12 +135,12 @@
 				//console.log(play);
 				requestAnimationFrame(animate);	
 				//game.update();
-				if (play) {
+				//if (play) {
 					
 					//game.play();
 					game.update();
 					
-				}
+					//}
 				//groupStr.update();
 				//groupCap.update();
 				TWEEN.update();
@@ -148,6 +148,14 @@
 				
 			}
 			
+			/*function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}*/
 
 		</script>
 		

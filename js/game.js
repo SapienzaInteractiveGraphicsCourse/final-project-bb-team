@@ -1,5 +1,5 @@
-import {Car, PoliceCar, Taxi, Shield} from './models/objects.js'
-import CapAmerica from './models/cap.js'
+import {Car, PoliceCar, Taxi} from './models/objects.js'
+import IronMan from './models/ironman.js'
 
 class GameSettings {
 	settings = {
@@ -9,10 +9,12 @@ class GameSettings {
 		
 		nCars:3,
 		nPoliceCars:2,
+		nTaxi:2,
 		
 		collidableArray:[],
 		carArray:[],
-		policeArray:[]
+		policeArray:[],
+		taxiArray:[]
 	}
 }
 
@@ -29,7 +31,8 @@ export default class Game {
 		this.tesseract = tesseract;
 		
 		Car.load().then((mesh) => {this.carMesh = mesh});
-		//PoliceCar.load().then((mesh) => {this.policeMesh = mesh});
+		PoliceCar.load().then((mesh) => {this.policeMesh = mesh});
+		//Taxi.load().then((mesh) => {this.taxiMesh = mesh});
 		
 		this.worldMesh = new THREE.Object3D();
 		this.worldMesh.name = "World";
@@ -50,13 +53,13 @@ export default class Game {
 						this.play();
 						break;
 					case 'a':
-						this.cap.moveLeft();
+						this.ironman.moveLeft();
 						break;
 					case 'd':
-						this.cap.moveRight();
+						this.ironman.moveRight();
 						break;
 					case ' ':
-						this.cap.jump();
+						this.ironman.jump();
 						break;
 						
 					default:
@@ -74,17 +77,18 @@ export default class Game {
 		this.camera.position.z = 7.5;
 		this.camera.lookAt(0, -0.5, 0);
 		
-		var geometry = new THREE.CylinderGeometry(this.game.streetRadius, this.game.streetRadius, this.game.streetLength, 50, 10);
+		var geometry = new THREE.CylinderGeometry(this.game.streetRadius, this.game.streetRadius, this.game.streetLength, 64);
 		var material = new THREE.MeshBasicMaterial({map: this.worldTexture});
 		var street = new THREE.Mesh(geometry, material);
 		street.name = 'Street';
+		this.worldMesh.add(street)
 		
 		street.position.y = -4.5;
 		street.rotation.z = Math.PI/2;
 			
 		//this.obstacleMesh.add(this.carMesh);
 		street.add(this.obstacleMesh);	
-		this.worldMesh.add(street);
+
 		
 		
 		//this.scene.add(this.worldMesh);
@@ -102,68 +106,44 @@ export default class Game {
 		document.getElementsByClassName('header')[1].style.visibility = 'visible';
 		
 		this.scene.add(this.worldMesh);
-		//this.cap.visible = true;
 		
-		this.cap = new CapAmerica();
-		this.cap.load(this.scene);
-		//console.log(this.capMesh);
+		this.ironman = new IronMan();
+		this.ironman.load(this.scene);
 		
 		//, (mesh) => {
 			//mesh.children[0].visible = true;
 		//})
-		
-		
-		var rotationTween1 = new TWEEN.Tween(this.worldMesh.children[0].rotation).to( {x: this.worldMesh.children[0].rotation.x + 2*Math.PI}, 3500).repeat(Infinity).start();
-		
-		//var sideTween;
-		//var cap = this.scene.getObjectByName("CapAmerica");
-		//console.log(cap);
 			
-		/*	document.addEventListener("keydown", function(event){
-				if (cap){
-					if (event.key == 'a')
-						sideTween = new TWEEN.Tween(cap.position).to( {x: cap.position.x - 2.0}, 5).start();
-					if (event.key == 'd')
-						sideTween = new TWEEN.Tween(cap.position).to( {x: cap.position.x + 2.0}, 5).start();
-						//this.capamerica.move(event.key, this.scene)
-					if (event.key == ' '){
-						var jumpTween1 = new TWEEN.Tween(cap.position).to({y: cap.position.y + 0.9}, 700).easing(TWEEN.Easing.Quadratic.Out);
-			        	var jumpTween2 = new TWEEN.Tween(cap.position).to({y: cap.position.y}, 700).easing(TWEEN.Easing.Quadratic.In);
-
-			        	jumpTween1.chain(jumpTween2);	
-
-			        	jumpTween1.start();
-					}
-				}
-				if (event.key != 'a' && event.key != 'd' && event.key != ' ')
-					console.log("Wrong key pressed");
-				
-					
-				
-			})
-		
-		}).repeat(Infinity).start();*/
+		//this.camera.position.set(0, 600, -600);
+		//this.camera.lookAt(this.ironman.position)
 		
 		
+		var rotationTween1 = new TWEEN.Tween(this.worldMesh.children[0].rotation).to( {x: this.worldMesh.children[0].rotation.x + 2*Math.PI}, 5000).repeat(Infinity).start();
 		
 		this.spawnCar(this.game.nCars);
-		//this.spawnPolice(this.game.nPoliceCars);
+		this.spawnPolice(this.game.nPoliceCars);
+		//this.spawnTaxi(this.game.nTaxi);
 			
 	}
 	
 	update(){
+		this.ironman.update();
 	}
 	
 	spawnCar(n){
 		this.randomGenerator(this.game.carArray, 'Car', n);
 	}
 	
-	/*spawnPolice(n){
+	spawnPolice(n){
 		this.randomGenerator(this.game.policeArray, 'PoliceCar', n);
+	}
+	
+	/*spawnTaxi(n){
+		this.randomGenerator(this.game.taxiArray, 'Taxi', n);
 	}*/
 	
 	randomGenerator(arr, object, n){
-		var a = Math.PI*2/n;
+		var a = 2*Math.PI/n;
 		var height = this.game.streetRadius;
 		
 		for (var i=0; i<n; i++){
@@ -174,19 +154,38 @@ export default class Game {
 					o = new Car(this.carMesh.clone());
 					break;
 					
-					/*case 'PoliceCar':
+				case 'PoliceCar':
 					o = new PoliceCar(this.policeMesh.clone());
-					break;*/
-					
+					break;
+				
+				case 'Taxi':
+					o = new Taxi(this.taxiMesh.clone());
+					break;
+				
 				default:
 					break;
 			}
-			//o.mesh.position.z = Math.cos(a*i)*height;
-			o.mesh.position.y = Math.sin(a*i)*(height + 6);
-			//o.mesh.position.z = 125 - (Math.random()*250 + 1);
-			console.log(o.mesh);
+			o.mesh.position.x = Math.cos(a*i)*(height);
+            o.mesh.position.y = Math.sin(a*i)*(height); 
+			o.mesh.position.z = (Math.random()*20+1) - 10;
+			o.mesh.rotation.z = a*i - Math.PI/2;
+			//o.mesh.rotation.z = a*i - Math.PI/2;
+         	console.log(o.mesh);
 			//if (o.mesh.position.y != 0 ) o.mesh.position.y = 0;
-			//if (o.mesh.rotation.x != - Math.PI) o.mesh.rotation.z = - Math.PI;
+			//if (o.mesh.rotation.z != - Math.PI/2) o.mesh.rotation.z = - Math.PI/2; 
+			//if (i == 0){
+				//o.mesh.rotation.z = Math.PI/2;
+				//o.mesh.position.y = this.game.streetRadius;
+				//o.mesh.position.x = this.game.streetRadius;
+				/*if (object == 'PoliceCar'){
+					o.mesh.position.y = this.game.streetRadius - 3.6;
+					o.mesh.position.x = this.game.streetRadius + 3.3;
+				}*/
+			//}
+			/*if (i == 0 && object != 'PoliceCar'){ 
+				o.mesh.position.y = height - 2.0;
+				o.mesh.position.x = this.game.streetRadius;
+			}*/
 			o.move();
 			arr.push(o);
 			this.game.collidableArray.push(o.mesh);

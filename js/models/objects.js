@@ -26,7 +26,9 @@ import {GLTFLoader} from '../GLTFLoader.js'
 	 			mesh.scale.set(.005, .005, .005);
 				//model.visible = false;
 				mesh.rotation.z = - Math.PI/2;
-				mesh.position.x = 3.4;
+				//mesh.rotation.x = Math.PI/2;
+				//mesh.position.z -= 10;
+				mesh.position.y = 5;
 	 			mesh.name = 'Car';
 				resolve(mesh);
 			}, null, reject);
@@ -78,7 +80,12 @@ import {GLTFLoader} from '../GLTFLoader.js'
  			loader.load('./models/police_car/scene.gltf', object => {
  				var mesh = object.scene;
 				console.log(object);
-				mesh.scale.set(.005, .005, .005);
+				mesh.scale.set(.5, .5, .5);
+				mesh.rotation.z = - Math.PI/2;
+				//mesh.rotation.x = 0;
+				//mesh.position.x = 3.4;
+				//mesh.position.y = 2.8;
+				//mesh.position.z -= 2;
 				mesh.name = 'PoliceCar';
 				resolve(mesh);
  			}, null, reject);
@@ -101,8 +108,39 @@ import {GLTFLoader} from '../GLTFLoader.js'
  }
  
  export class Taxi {
+	 
+	constructor(mesh){
+	 	this.mesh = new THREE.Mesh(
+	 		new THREE.BoxGeometry(15, 10, 20),
+			new THREE.MeshBasicMaterial({opacity: 0.0, transparent: true})
+	 	).add(mesh);
+		this.id = mesh.id;
+	}
  	
-	 async load(scene){
+	move(){return}
+	
+	catch (callback){
+		callback();
+	}
+	
+	static async load(){
+		var loader = new GLTFLoader();
+		return new Promise((resolve, reject) => {
+			loader.load('./models/nyc_taxi/scene.gltf', object => {
+				var mesh = object.scene;
+				mesh.name = 'Taxi';
+				console.log(object);
+				mesh.scale.set(.05, .05, .05);
+				mesh.position.z -= 8;
+				mesh.position.x = 3;
+				mesh.position.y = 1.5;
+				//mesh.rotation.y = -Math.PI/6;
+
+				resolve(mesh);
+			}, null, reject);
+		});
+	}
+	/* async load(scene){
 		 const loader = new GLTFLoader();
 		 loader.load('./models/nyc_taxi/scene.gltf', function(gltf){
 			 console.log(gltf);
@@ -115,10 +153,10 @@ import {GLTFLoader} from '../GLTFLoader.js'
 		 }, function(error){
 			 console.log("[Taxi Load Function]: An error occurred");
 		 });
-	 }
+	 }*/
  }
  
- export class Shield {
+ /*export class Shield {
  	   
 	 async load(scene){
 		 var model;
@@ -144,5 +182,5 @@ import {GLTFLoader} from '../GLTFLoader.js'
 			 }
 		 });
 	 }
- }
+ }*/
  
