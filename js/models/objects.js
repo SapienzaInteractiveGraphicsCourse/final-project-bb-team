@@ -25,36 +25,15 @@ import {GLTFLoader} from '../GLTFLoader.js'
 	 			console.log(object);
 	 			mesh.scale.set(.005, .005, .005);
 				//model.visible = false;
-				mesh.rotation.z = - Math.PI/2;
+				//mesh.rotation.z = - Math.PI/2;
 				//mesh.rotation.x = Math.PI/2;
 				//mesh.position.z -= 10;
-				mesh.position.y = 5;
+				//mesh.position.y = 5;
 	 			mesh.name = 'Car';
 				resolve(mesh);
 			}, null, reject);
 		}); 
 	 }
-	 
-	 /*{
-		var model;
- 		const loader = new GLTFLoader();
- 		loader.load('./models/dirty_car/scene.gltf', function(gltf){
- 			console.log(gltf);
- 			model = gltf.scene;
- 			model.scale.set(.005, .005, .005);
-			model.visible = false;
-			model.rotation.z = - Math.PI/2;
-			model.position.set(3.4, 2.5, 0);
- 			model.name = 'Car';
- 			//scene.add(model);
-		}, function(xhr){
-			console.log((xhr.loaded/xhr.total * 100) + "% loaded");
-		}, function(error){
-			console.log("[Car Load Function]: An error occurred");
-		});
-		
-		
-	}*/
 
  }
  
@@ -81,30 +60,16 @@ import {GLTFLoader} from '../GLTFLoader.js'
  				var mesh = object.scene;
 				console.log(object);
 				mesh.scale.set(.5, .5, .5);
-				mesh.rotation.z = - Math.PI/2;
+				//mesh.rotation.z = - Math.PI/2;
 				//mesh.rotation.x = 0;
-				//mesh.position.x = 3.4;
-				//mesh.position.y = 2.8;
+				//mesh.position.x = 7;
+				//mesh.position.y = 10;
 				//mesh.position.z -= 2;
 				mesh.name = 'PoliceCar';
 				resolve(mesh);
  			}, null, reject);
 		});
 	 }
-	/* async load(scene){
-		 const loader = new GLTFLoader();
-		 loader.load('./models/police_car/scene.gltf', function(gltf){
-			 console.log(gltf);
-			 var model = gltf.scene;
-			 model.scale.set(.003, .003, .003);
-			 model.name = 'PoliceCar';
-			 scene.add(model);
-		 }, function(xhr){
-			 console.log((xhr.loaded/xhr.total * 100) + "% lodaded");
-		 }, function(error){
-			 console.log("[PoliceCar Load Function]: An error occurred");
-		 });
-	 }*/
  }
  
  export class Taxi {
@@ -131,11 +96,10 @@ import {GLTFLoader} from '../GLTFLoader.js'
 				mesh.name = 'Taxi';
 				console.log(object);
 				mesh.scale.set(.05, .05, .05);
-				mesh.position.z -= 8;
-				mesh.position.x = 3;
-				mesh.position.y = 1.5;
-				//mesh.rotation.y = -Math.PI/6;
-
+				//mesh.position.z -= 8;
+				//mesh.position.x = 3;
+				mesh.position.y = 0.8;
+				mesh.rotation.y = 1;
 				resolve(mesh);
 			}, null, reject);
 		});

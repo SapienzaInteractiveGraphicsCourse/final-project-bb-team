@@ -5,9 +5,9 @@ class GameSettings {
 	settings = {
 		
 		streetRadius:3.5,
-		streetLength:20,
+		streetLength:25,
 		
-		nCars:3,
+		nCars:2,
 		nPoliceCars:2,
 		nTaxi:2,
 		
@@ -33,7 +33,7 @@ export default class Game {
 		
 		Car.load().then((mesh) => {this.carMesh = mesh});
 		PoliceCar.load().then((mesh) => {this.policeMesh = mesh});
-		//Taxi.load().then((mesh) => {this.taxiMesh = mesh});
+		Taxi.load().then((mesh) => {this.taxiMesh = mesh});
 		
 		this.worldMesh = new THREE.Object3D();
 		this.worldMesh.name = "World";
@@ -124,7 +124,7 @@ export default class Game {
 		
 		this.spawnCar(this.game.nCars);
 		this.spawnPolice(this.game.nPoliceCars);
-		//this.spawnTaxi(this.game.nTaxi);
+		this.spawnTaxi(this.game.nTaxi);
 			
 	}
 	
@@ -142,9 +142,9 @@ export default class Game {
 		this.randomGenerator(this.game.policeArray, 'PoliceCar', n);
 	}
 	
-	/*spawnTaxi(n){
+	spawnTaxi(n){
 		this.randomGenerator(this.game.taxiArray, 'Taxi', n);
-	}*/
+	}
 	
 	randomGenerator(arr, object, n){
 		var a = 2*Math.PI/n;
@@ -170,8 +170,8 @@ export default class Game {
 					break;
 			}
 			o.mesh.position.x = Math.cos(a*i)*(height);
-            o.mesh.position.y = Math.sin(a*i)*(height); 
-			o.mesh.position.z = (Math.random()*20+1) - 10;
+            o.mesh.position.y = ((Math.random()*24) + 1) - 12; //sx-dx
+			o.mesh.position.z = Math.sin(a*i)*height;//randomizzare se no si sovrappongono				//height;//((Math.random()*10) + 1) - 5;
 			o.mesh.rotation.z = a*i - Math.PI/2;
 			//o.mesh.rotation.z = a*i - Math.PI/2;
          	console.log(o.mesh);
