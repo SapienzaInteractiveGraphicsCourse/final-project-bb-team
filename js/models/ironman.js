@@ -19,9 +19,10 @@ export default class IronMan {
 			this.mesh.rotateY(Math.PI/2);
 			//this.mesh.translateY(-2);
 			//this.mesh.translateZ(-4.5);
-			//this.mesh.visible = true;
+			this.mesh.visible = false;
 			this.init();
 			scene.add(this.mesh);
+			//callback(this.mesh);
 		}, null, null);
 	}
 	
@@ -162,6 +163,7 @@ export default class IronMan {
 	update(){
 		this.runningTweens.update();
 	}
+	
 	/*move(cmd, scene){
 		var cap = scene.getObjectByName("CapAmerica");
 		var sideTween;

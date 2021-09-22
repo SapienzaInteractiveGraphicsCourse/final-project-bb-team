@@ -24,11 +24,12 @@ export default class Game {
 	//distVal = document.getElementById("distValue");
 
 	
-	constructor(scene, camera, renderer, tesseract){
+	constructor(scene, camera, renderer, tesseract, ironman){
 		this.scene = scene;
 		this.camera = camera;
 		this.renderer = renderer;
 		this.tesseract = tesseract;
+		this.ironman = ironman;
 		
 		Car.load().then((mesh) => {this.carMesh = mesh});
 		PoliceCar.load().then((mesh) => {this.policeMesh = mesh});
@@ -106,9 +107,10 @@ export default class Game {
 		document.getElementsByClassName('header')[1].style.visibility = 'visible';
 		
 		this.scene.add(this.worldMesh);
+		this.ironman.mesh.visible = true;
 		
-		this.ironman = new IronMan();
-		this.ironman.load(this.scene);
+		//this.ironman = new IronMan();
+		//this.ironman.load(this.scene);
 		
 		//, (mesh) => {
 			//mesh.children[0].visible = true;
@@ -128,6 +130,8 @@ export default class Game {
 	
 	update(){
 		this.ironman.update();
+		
+		
 	}
 	
 	spawnCar(n){

@@ -91,10 +91,15 @@
 			
 			var tesseract = new Tesseract();
 			tesseract.load(scene);
+			
+			var ironman = new IronMan();
+			ironman.load(scene);//, (mesh) => {
+				//mesh.visible = false;
+				//});
 			//if (tesseract) tesseract.move();
 			
 			
-			var game = new Game(scene, camera, renderer, tesseract);
+			var game = new Game(scene, camera, renderer, tesseract, ironman);
 			//var play = false;
 			
 			//var play;
