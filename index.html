@@ -51,7 +51,6 @@
 			import Game from './js/game.js'
 			import Tesseract from './js/models/tesseract.js'
 			import IronMan from './js/models/ironman.js'
-			//import Car from './js/models/objects.js'
 			
 			//Scene and Camera
 			var scene = new THREE.Scene;
@@ -74,7 +73,7 @@
 			//document.getElementById('playing').style.visibility = 'hidden';
 
 			
-			// Lights: directional for the sun, ambient for the diffuse 
+			// Lights: directional for the sun, ambient for the diffuse
 			// lighting and point in the tesseract
 			var ambLight = new THREE.AmbientLight(0xffffff, 1);
 			scene.add(ambLight);
@@ -88,81 +87,27 @@
 			scene.add(pntLight);
 
 			
-			
 			var tesseract = new Tesseract();
 			tesseract.load(scene);
 			
 			var ironman = new IronMan();
-			ironman.load(scene);//, (mesh) => {
-				//mesh.visible = false;
-				//});
-			//if (tesseract) tesseract.move();
+			ironman.load(scene, (mesh) => {
+				mesh.visible = false;
+				});
 			
 			
 			var game = new Game(scene, camera, renderer, ironman);
-			//var play = false;
-			
-			//var play;
-			//var action = '';
-			//var capamerica;
-			//var groupStr = new TWEEN.Group();
-			//var groupCap = new TWEEN.Group();
-			
-			/*document.addEventListener("keydown", function(event){
-			
-				play = false; 
-				
-				//Go to playing page
-				//capamerica = new CapAmerica();
-				if (event.key == 'Enter'){
-					
-					scene.remove(scene.getObjectByName("Tesseract"));
-					document.getElementById('loading').style.visibility = "hidden";
-					document.getElementsByClassName('header')[0].style.visibility = 'visible';
-					document.getElementsByClassName('header')[1].style.visibility = 'visible';
-					//game = new Game(scene, camera, renderer, tesseract);
-					//cap.visible = true;
-					//capamerica.load(scene);
-					game.init();
-					
-					//scene.getObjectByName("CapAmerica").visible = true;
-					scene.getObjectByName("Car").visible = true;
-					play = true;
-			
-					//game.play();
-					
-				}		
-			});*/
 			
 			animate();
 			
 			function animate(){
-				//console.log(play);
-				requestAnimationFrame(animate);	
-				//game.update();
-				//if (play) {
-					
-					//game.play();
-					game.update();
-					
-					//}
-				//groupStr.update();
-				//groupCap.update();
+				requestAnimationFrame(animate);
+				game.update();
 				TWEEN.update();
 				renderer.render(scene, camera);
-				
 			}
-			
-			/*function onWindowResize() {
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-			}*/
 
 		</script>
-		
+
 	</body>
 </html>

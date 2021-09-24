@@ -1,4 +1,4 @@
-import {Car, PoliceCar, Taxi, Tesseract} from './models/objects.js'
+import {Car, PoliceCar, Taxi, Tesseract, Reactor} from './models/objects.js'
 import IronMan from './models/ironman.js'
 
 class GameSettings {
@@ -13,15 +13,17 @@ class GameSettings {
 		streetLength:50,
 		
 		nCars:3,
-		nPoliceCars:3,
-		nTaxi:2,
-		nTesseracts:1,
+		nPoliceCars:8,
+		nTaxi:5,
+		nTesseracts:4,
+		nReactors:1,
 		
 		collidableArray:[],
 		carArray:[],
 		policeArray:[],
 		taxiArray:[],
-		tesseractArray:[]
+		tesseractArray:[],
+		reactorArray:[]
 	}
 }
 
@@ -42,6 +44,7 @@ export default class Game {
 		PoliceCar.load().then((mesh) => {this.policeMesh = mesh});
 		Taxi.load().then((mesh) => {this.taxiMesh = mesh});
 		Tesseract.load().then((mesh) => {this.tessMesh = mesh});
+		Reactor.load().then((mesh) => {this.reactorMesh = mesh});
 		
 		this.worldMesh = new THREE.Object3D();
 		this.worldMesh.name = "World";
@@ -77,7 +80,7 @@ export default class Game {
 					
 			}, false);		
 		});
-		
+
 	}
 	
 	init(){
@@ -133,7 +136,8 @@ export default class Game {
 		this.spawnCar(this.game.nCars);
 		this.spawnPolice(this.game.nPoliceCars);
 		this.spawnTesseract(this.game.nTesseracts);
-		//this.spawnTaxi(this.game.nTaxi);
+		this.spawnTaxi(this.game.nTaxi);
+		this.spawnReactor(this.game.nReactors);
 			
 	}
 	
@@ -150,8 +154,8 @@ export default class Game {
 	    //console.log(this.game.distance);
 	    document.getElementById("distValue").innerHTML = Math.floor(this.game.distance);
 
-	    for (var i=1; i<11; i++) {
-	    	if(this.game.distance > 20*i){
+	    for (var i=0; i<11; i++) {
+	    	if(this.game.distance > 100*i){
 	    		this.game.level = i+1;
 	    		this.game.distanceIncrease += 0.0001;
 	    		this.game.rotationIncrease += 0.006;
@@ -180,6 +184,11 @@ export default class Game {
 	spawnTesseract(n){
 		this.randomGenerator(this.game.tesseractArray, 'Tesseract', n);
 	}
+
+	spawnReactor(n){
+		this.randomGenerator(this.game.reactorArray, 'Reactor', n);
+	}
+
 	
 	randomGenerator(arr, object, n){
 		var a = 2*Math.PI/n;
@@ -202,33 +211,25 @@ export default class Game {
 				
 				case 'Taxi':
 					o = new Taxi(this.taxiMesh.clone());
-					//o.mesh.rotation.x = -Math.PI/2;
 					break;
 				
 				case 'Tesseract':
 					o = new Tesseract(this.tessMesh.clone());
 					break;
+
+				case 'Reactor':
+					o = new Reactor(this.reactorMesh.clone());
+					break;
 				
 				default:
 					break;
 			}
+
 			o.mesh.position.x = Math.cos(a*i)*h;
-            o.mesh.position.y = 10 - (Math.random()*20); 
-			o.mesh.position.z = Math.sin(a*i)*h;//height;//1.5 - ((Math.random()*3) + 1);
-			//if (i % 2 != 0) o.mesh.rotation.y = - Math.PI;
-			//if (i == 3) o.mesh.rotation.y = - Math.PI;
-			if (i == 1) o.mesh.rotation.y = - 2*Math.PI/3;
-			if (i == 2) o.mesh.rotation.y = - 5*Math.PI/4;
-			//if (i==0) o.mesh.rotation.y = Math.PI;
+            o.mesh.position.y = 20 - (Math.random()*40); 
+			o.mesh.position.z = Math.sin(a*i)*h;
 			
-			/*o.mesh.position.x = hyp * Math.cos(ang);
-			o.mesh.position.y = (Math.random()*22) - 11;
-			o.mesh.position.z = hyp * Math.sin(ang);
-			o.mesh.rotation.z = -Math.PI/2;*/
-			
-			
-			//o.mesh.rotation.z = a*i - Math.PI/2;
-         	//console.log(o.mesh);
+			o.mesh.rotation.y = 2*Math.PI - a*i;
 
 			o.move();
 			arr.push(o);
@@ -243,7 +244,6 @@ export default class Game {
         if (this.ironman.ironman.isJumping) return
 
         //console.log(this.ironman.mesh);
-
         
     }
 }

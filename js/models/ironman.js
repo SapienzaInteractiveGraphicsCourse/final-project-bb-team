@@ -15,7 +15,7 @@ export default class IronMan {
 		this.jumpTweens = new TWEEN.Group();
 	}
 	
-	async load(scene){
+	async load(scene, callback){
 		var loader = new GLTFLoader();
 		loader.load('./models/iron_man_mark_46/scene.gltf', object => {
 			this.mesh = new THREE.Mesh(
@@ -24,14 +24,17 @@ export default class IronMan {
                 //new THREE.MeshBasicMaterial({opacity: 0.5, transparent: true, color: 0xff0000})
             ).add(object.scene);
 			this.mesh.name = "IronMan";
-			this.mesh.scale.set(.04, .04, .04);
+			this.mesh.scale.set(.06, .06, .06);
 			this.mesh.position.y = 6;
 			this.mesh.position.z = 4.6;
 			this.mesh.rotateY(Math.PI/2);
 			this.mesh.visible = false;
 			this.init();
+
+			console.log(this.mesh.geometry);
+
 			scene.add(this.mesh);
-			//callback(this.mesh);
+			callback(this.mesh);
 		}, null, null);
 	}
 	
