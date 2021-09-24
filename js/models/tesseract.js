@@ -9,7 +9,8 @@ export default class Tesseract {
 				new THREE.BoxGeometry(20, 20, 20),
 				new THREE.MeshBasicMaterial({transparent: true, opacity: 0.0})
 			).add(object.scene);
-			this.mesh.scale.set(.01, .01, .01);
+			this.mesh.scale.set(.006, .006, .006);
+			this.mesh.position.y = 0.7;
 			this.mesh.name = "Tesseract";
 			scene.add(this.mesh);
 			this.move();

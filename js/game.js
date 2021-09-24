@@ -5,10 +5,12 @@ class GameSettings {
 	settings = {
 		
 		distance:0,
+		distanceIncrease:0.1,
+		rotationIncrease:2,
 		level:1,
 		
-		streetRadius:3.5,
-		streetLength:22,
+		streetRadius:10.5,
+		streetLength:50,
 		
 		nCars:3,
 		nPoliceCars:3,
@@ -81,8 +83,8 @@ export default class Game {
 	init(){
 		
 		this.camera.position.y = 2;
-		this.camera.position.z = 7.5;
-		this.camera.lookAt(0, -0.5, 0);
+		this.camera.position.z = 4;
+		this.camera.lookAt(0, -0.5, -2);
 		
 		var geometry = new THREE.CylinderGeometry(this.game.streetRadius, this.game.streetRadius, this.game.streetLength, 64);
 		var material = new THREE.MeshBasicMaterial({map: this.worldTexture});
@@ -122,7 +124,7 @@ export default class Game {
 			//mesh.children[0].visible = true;
 		//})
 			
-		//this.camera.position.set(0, 600, -600);
+		this.camera.position.set(0, 18, 15);
 		//this.camera.lookAt(this.ironman.position)
 		
 		
@@ -136,22 +138,31 @@ export default class Game {
 	}
 	
 	update(){
-		
-		this.ironman.update();
-		
-	    this.game.distance += 0.1;
-	     //console.log(this.game.distance);
-	     document.getElementById("distValue").innerHTML = Math.floor(this.game.distance);
 
-	     for (var i=1; i<11; i++) {
-	      if(this.game.distance > 100*i){
-	       this.game.level = i+1;
-	      }
-	     }
-     
-	     document.getElementById("levelValue").innerHTML = Math.floor(this.game.level);
-		
-		
+		this.ironman.update();
+
+		//console.log(this.ironman.ironman.isJumping);
+
+		//this.worldMesh.children[0].rotation.x = this.game.rotationIncrease;
+		//console.log(this.worldMesh.children[0])
+
+	    this.game.distance += this.game.distanceIncrease;
+	    //console.log(this.game.distance);
+	    document.getElementById("distValue").innerHTML = Math.floor(this.game.distance);
+
+	    for (var i=1; i<11; i++) {
+	    	if(this.game.distance > 20*i){
+	    		this.game.level = i+1;
+	    		this.game.distanceIncrease += 0.0001;
+	    		this.game.rotationIncrease += 0.006;
+	    		//console.log(this.game.rotationIncrease)
+	    	}
+	    }
+	    
+	    document.getElementById("levelValue").innerHTML = Math.floor(this.game.level);
+
+	    this.collisionDetection();
+
 	}
 	
 	spawnCar(n){
@@ -217,7 +228,7 @@ export default class Game {
 			
 			
 			//o.mesh.rotation.z = a*i - Math.PI/2;
-         	console.log(o.mesh);
+         	//console.log(o.mesh);
 
 			o.move();
 			arr.push(o);
@@ -225,4 +236,14 @@ export default class Game {
 			this.obstacleMesh.add(o.mesh);
 		}
 	}
+
+
+	collisionDetection() {
+        // var originPoint = this.ironman.mesh.position.clone();
+        if (this.ironman.ironman.isJumping) return
+
+        //console.log(this.ironman.mesh);
+
+        
+    }
 }
