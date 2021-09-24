@@ -25,8 +25,8 @@ import {GLTFLoader} from '../GLTFLoader.js'
 	 			console.log(object);
 	 			mesh.scale.set(.005, .005, .005);
 				//model.visible = false;
-				//mesh.rotation.z = - Math.PI/2;
-				//mesh.rotation.x = Math.PI/2;
+				//mesh.rotation.y = - Math.PI/2;
+				mesh.rotation.z = - Math.PI/2;
 				//mesh.position.z -= 10;
 				//mesh.position.y = 5;
 	 			mesh.name = 'Car';
@@ -60,7 +60,7 @@ import {GLTFLoader} from '../GLTFLoader.js'
  				var mesh = object.scene;
 				console.log(object);
 				mesh.scale.set(.5, .5, .5);
-				//mesh.rotation.z = - Math.PI/2;
+				mesh.rotation.z = - Math.PI/2;
 				//mesh.rotation.x = 0;
 				//mesh.position.x = 7;
 				//mesh.position.y = 10;
@@ -98,8 +98,8 @@ import {GLTFLoader} from '../GLTFLoader.js'
 				mesh.scale.set(.05, .05, .05);
 				//mesh.position.z -= 8;
 				//mesh.position.x = 3;
-				mesh.position.y = 0.8;
-				mesh.rotation.y = 1;
+				//mesh.position.y = 0.8;
+				mesh.rotation.z = - Math.PI/2;
 				resolve(mesh);
 			}, null, reject);
 		});
@@ -119,6 +119,40 @@ import {GLTFLoader} from '../GLTFLoader.js'
 		 });
 	 }*/
  }
+ 
+ export class Tesseract {
+  
+   	constructor(mesh){
+    	this.mesh = new THREE.Mesh(
+     	   new THREE.BoxGeometry(20, 20, 20),
+    		new THREE.MeshBasicMaterial({opacity: 0.0, transparent: true}) 
+    	).add(mesh)
+   	 	this.id = mesh.id;
+   }
+  
+   	move(){
+    	var tesseractTween = new TWEEN.Tween(this.mesh.children[0].rotation).to({ x: this.mesh.children[0].rotation.x + 2*Math.PI, y: this.mesh.children[0].rotation.y + 2*Math.PI}, 3000).repeat(Infinity).start();
+   	}
+  
+   	catch (callback){
+    	callback();
+   	}
+  
+  	 static async load(){
+    	var loader = new GLTFLoader();
+   	  	return new Promise((resolve, reject) => {
+    		loader.load('./models/tesseract_cube/scene.gltf', object => {
+     		  var mesh = object.scene;
+      		 	//console.log(object);
+      		  mesh.scale.set(.004, .004, .004);
+			  mesh.position.y = 4;
+			  //mesh.position.x = 2;
+      		  mesh.name = 'Tesseract';
+     		  resolve(mesh);
+    	  }, null, reject);
+   		}); 
+   	}
+  }
  
  /*export class Shield {
  	   

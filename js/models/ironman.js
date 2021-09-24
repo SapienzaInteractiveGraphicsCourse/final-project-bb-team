@@ -51,6 +51,8 @@ export default class IronMan {
 		// retrieve bones
 	    this.body = this.mesh.children[0].children[0];
 		//this.spine = this.mesh.children[0].children[0].children[0].children[0].children[0].children[2];
+	
+	    this.head = this.mesh.children[0].children[0].children[0].children[0].children[0].children[2].children[0].children[2].skeleton.bones[39];
 		this.spine = this.mesh.children[0].children[0].children[0].children[0].children[0].children[2].children[0].children[2].skeleton.bones[7];
 		this.L_shoulder = this.mesh.children[0].children[0].children[0].children[0].children[0].children[2].children[0].children[2].skeleton.bones[11];
 		this.R_shoulder = this.mesh.children[0].children[0].children[0].children[0].children[0].children[2].children[0].children[2].skeleton.bones[42];
@@ -91,17 +93,34 @@ export default class IronMan {
 		
 	run(){
 		
-		//Body movement
-		var meshTween1 = new TWEEN.Tween(this.body.position, this.runningTweens).to({x: this.body.position.x + 0.5}, 1000);
-		var meshTween2 = new TWEEN.Tween(this.body.position, this.runningTweens).to({x: this.body.position.x - 0.5}, 1000);
+		//Body movement ***********************************************************************************
+
+		var meshTween1 = new TWEEN.Tween(this.body.position, this.runningTweens).to({x: this.body.position.x + 0.5}, 600);
+		var meshTween2 = new TWEEN.Tween(this.body.position, this.runningTweens).to({x: this.body.position.x - 0.5}, 600);
 		meshTween1.chain(meshTween2.chain(meshTween1));
 		this.runningTweens.add(meshTween1);
 		
-		//Spine rotation
-		var spineTween = new TWEEN.Tween(this.spine.rotation, this.runningTweens).to({x: 0.5}, 2000);
+		//Spine rotation ***********************************************************************************
+
+		var spineTween = new TWEEN.Tween(this.spine.rotation, this.runningTweens).to({x: 0.5}, 1200);
 		this.runningTweens.add(spineTween);
 		
-		//Leg rotation
+	    var spineTween1 = new TWEEN.Tween(this.spine.rotation, this.runningTweens).to({z: this.spine.rotation.z + 0.2}, 600);
+	    var spineTween2 = new TWEEN.Tween(this.spine.rotation, this.runningTweens).to({z: this.spine.rotation.z - 0.1}, 1200);
+	    var spineTween3 = new TWEEN.Tween(this.spine.rotation, this.runningTweens).to({z: this.spine.rotation.z}, 600);
+	    spineTween1.chain(spineTween2.chain(spineTween3.chain(spineTween1)));
+	    this.runningTweens.add(spineTween1);
+		
+	    //Head rotation ***********************************************************************************
+	    var headTween1 = new TWEEN.Tween(this.head.rotation, this.runningTweens).to({z: this.head.rotation.z + 0.4}, 600);
+	    var headTween2 = new TWEEN.Tween(this.head.rotation, this.runningTweens).to({z: this.head.rotation.z - 0.4}, 1200);
+	    var headTween3 = new TWEEN.Tween(this.head.rotation, this.runningTweens).to({z: this.head.rotation.z}, 600);
+	    headTween1.chain(headTween2.chain(headTween3.chain(headTween1)));
+	    this.runningTweens.add(headTween1);
+		
+		
+		//Leg rotation ***********************************************************************************
+
 		var legTween1 = new TWEEN.Tween(this.L_hip.rotation, this.runningTweens).to({x:  this.L_hip.rotation.x - 0.4}, 1000);
 		var legTween2 = new TWEEN.Tween(this.L_hip.rotation, this.runningTweens).to({x:  this.L_hip.rotation.x + 0.8}, 2000);
 		var legTween3 = new TWEEN.Tween(this.L_hip.rotation, this.runningTweens).to({x:  this.L_hip.rotation.x}, 1000);
@@ -116,7 +135,22 @@ export default class IronMan {
 		this.runningTweens.add(legTween4);
 		//legTween4.start();
 		
-		//Arm rotation
+	    //Knee rotation ***********************************************************************************
+		
+	    var kneeTween1 = new TWEEN.Tween(this.L_knee.rotation, this.runningTweens).to({x: this.L_knee.rotation.x + 0.4}, 600);
+	    var kneeTween2 = new TWEEN.Tween(this.L_knee.rotation, this.runningTweens).to({x: this.L_knee.rotation.x - 0.8}, 1200);
+	    var kneeTween3 = new TWEEN.Tween(this.L_knee.rotation, this.runningTweens).to({x: this.L_knee.rotation.x}, 600);
+	    kneeTween1.chain(kneeTween2.chain(kneeTween3.chain(kneeTween1)));
+	    this.runningTweens.add(kneeTween1);
+
+	    var kneeTween4 = new TWEEN.Tween(this.R_knee.rotation, this.runningTweens).to({x: this.R_knee.rotation.x - 0.8}, 600);
+	    var kneeTween5 = new TWEEN.Tween(this.R_knee.rotation, this.runningTweens).to({x: this.R_knee.rotation.x + 0.4}, 1200);
+	    var kneeTween6 = new TWEEN.Tween(this.R_knee.rotation, this.runningTweens).to({x: this.R_knee.rotation.x}, 600);
+	    kneeTween4.chain(kneeTween5.chain(kneeTween6.chain(kneeTween4)));
+	    this.runningTweens.add(kneeTween4)
+		
+		//Arm rotation ***********************************************************************************
+
 		var armTween1 = new TWEEN.Tween(this.L_shoulder.rotation, this.runningTweens).to({y: this.L_shoulder.rotation.y + 0.5}, 1000);
 		var armTween2 = new TWEEN.Tween(this.L_shoulder.rotation, this.runningTweens).to({y: this.L_shoulder.rotation.y - 1.0}, 2000);
 		var armTween3 = new TWEEN.Tween(this.L_shoulder.rotation, this.runningTweens).to({y: this.L_shoulder.rotation.y}, 1000);
@@ -130,6 +164,22 @@ export default class IronMan {
 		armTween4.chain(armTween5.chain(armTween6.chain(armTween4)));
 		this.runningTweens.add(armTween4);
 		//armTween4.start();
+		
+	    //Elbow rotation ***********************************************************************************
+		
+	    var elbowTween1 = new TWEEN.Tween(this.L_elbow.rotation, this.runningTweens).to({x: this.L_elbow.rotation.x - 1.2}, 600);
+	    var elbowTween2 = new TWEEN.Tween(this.L_elbow.rotation, this.runningTweens).to({x: this.L_elbow.rotation.x + 0.6}, 1200);
+	    var elbowTween3 = new TWEEN.Tween(this.L_elbow.rotation, this.runningTweens).to({x: this.L_elbow.rotation.x}, 600);
+	    elbowTween1.chain(elbowTween2.chain(elbowTween3.chain(elbowTween1)));
+	    this.runningTweens.add(elbowTween1);
+  
+	    var elbowTween4 = new TWEEN.Tween(this.R_elbow.rotation, this.runningTweens).to({x: this.R_elbow.rotation.x + 0.6}, 600);
+	    var elbowTween5 = new TWEEN.Tween(this.R_elbow.rotation, this.runningTweens).to({x: this.R_elbow.rotation.x - 1.2}, 1200);
+	    var elbowTween6 = new TWEEN.Tween(this.R_elbow.rotation, this.runningTweens).to({x: this.R_elbow.rotation.x}, 600);
+	    elbowTween4.chain(elbowTween5.chain(elbowTween6.chain(elbowTween4)));
+	    this.runningTweens.add(elbowTween4);
+		
+		
 		this.startRunningTweens();
 	}
 	

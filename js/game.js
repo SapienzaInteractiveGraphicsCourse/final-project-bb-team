@@ -1,20 +1,25 @@
-import {Car, PoliceCar, Taxi} from './models/objects.js'
+import {Car, PoliceCar, Taxi, Tesseract} from './models/objects.js'
 import IronMan from './models/ironman.js'
 
 class GameSettings {
 	settings = {
 		
-		streetRadius:3.5,
-		streetLength:25,
+		distance:0,
+		level:1,
 		
-		nCars:2,
-		nPoliceCars:2,
+		streetRadius:3.5,
+		streetLength:22,
+		
+		nCars:3,
+		nPoliceCars:3,
 		nTaxi:2,
+		nTesseracts:1,
 		
 		collidableArray:[],
 		carArray:[],
 		policeArray:[],
-		taxiArray:[]
+		taxiArray:[],
+		tesseractArray:[]
 	}
 }
 
@@ -24,16 +29,17 @@ export default class Game {
 	//distVal = document.getElementById("distValue");
 
 	
-	constructor(scene, camera, renderer, tesseract, ironman){
+	constructor(scene, camera, renderer, ironman){
 		this.scene = scene;
 		this.camera = camera;
 		this.renderer = renderer;
-		this.tesseract = tesseract;
+		//this.tesseract = tesseract;
 		this.ironman = ironman;
 		
 		Car.load().then((mesh) => {this.carMesh = mesh});
 		PoliceCar.load().then((mesh) => {this.policeMesh = mesh});
 		Taxi.load().then((mesh) => {this.taxiMesh = mesh});
+		Tesseract.load().then((mesh) => {this.tessMesh = mesh});
 		
 		this.worldMesh = new THREE.Object3D();
 		this.worldMesh.name = "World";
@@ -124,12 +130,26 @@ export default class Game {
 		
 		this.spawnCar(this.game.nCars);
 		this.spawnPolice(this.game.nPoliceCars);
-		this.spawnTaxi(this.game.nTaxi);
+		this.spawnTesseract(this.game.nTesseracts);
+		//this.spawnTaxi(this.game.nTaxi);
 			
 	}
 	
 	update(){
+		
 		this.ironman.update();
+		
+	    this.game.distance += 0.1;
+	     //console.log(this.game.distance);
+	     document.getElementById("distValue").innerHTML = Math.floor(this.game.distance);
+
+	     for (var i=1; i<11; i++) {
+	      if(this.game.distance > 100*i){
+	       this.game.level = i+1;
+	      }
+	     }
+     
+	     document.getElementById("levelValue").innerHTML = Math.floor(this.game.level);
 		
 		
 	}
@@ -146,12 +166,19 @@ export default class Game {
 		this.randomGenerator(this.game.taxiArray, 'Taxi', n);
 	}
 	
+	spawnTesseract(n){
+		this.randomGenerator(this.game.tesseractArray, 'Tesseract', n);
+	}
+	
 	randomGenerator(arr, object, n){
 		var a = 2*Math.PI/n;
-		var height = this.game.streetRadius;
+		//var height = this.game.streetRadius;
+		//var a;
+		var h = this.game.streetRadius;
 		
 		for (var i=0; i<n; i++){
 			var o;
+			//a = Math.random()*(2*Math.PI);
 			switch (object){
 				
 				case 'Car':
@@ -164,32 +191,34 @@ export default class Game {
 				
 				case 'Taxi':
 					o = new Taxi(this.taxiMesh.clone());
+					//o.mesh.rotation.x = -Math.PI/2;
+					break;
+				
+				case 'Tesseract':
+					o = new Tesseract(this.tessMesh.clone());
 					break;
 				
 				default:
 					break;
 			}
-			o.mesh.position.x = Math.cos(a*i)*(height);
-            o.mesh.position.y = ((Math.random()*24) + 1) - 12; //sx-dx
-			o.mesh.position.z = Math.sin(a*i)*height;//randomizzare se no si sovrappongono				//height;//((Math.random()*10) + 1) - 5;
-			o.mesh.rotation.z = a*i - Math.PI/2;
+			o.mesh.position.x = Math.cos(a*i)*h;
+            o.mesh.position.y = 10 - (Math.random()*20); 
+			o.mesh.position.z = Math.sin(a*i)*h;//height;//1.5 - ((Math.random()*3) + 1);
+			//if (i % 2 != 0) o.mesh.rotation.y = - Math.PI;
+			//if (i == 3) o.mesh.rotation.y = - Math.PI;
+			if (i == 1) o.mesh.rotation.y = - 2*Math.PI/3;
+			if (i == 2) o.mesh.rotation.y = - 5*Math.PI/4;
+			//if (i==0) o.mesh.rotation.y = Math.PI;
+			
+			/*o.mesh.position.x = hyp * Math.cos(ang);
+			o.mesh.position.y = (Math.random()*22) - 11;
+			o.mesh.position.z = hyp * Math.sin(ang);
+			o.mesh.rotation.z = -Math.PI/2;*/
+			
+			
 			//o.mesh.rotation.z = a*i - Math.PI/2;
          	console.log(o.mesh);
-			//if (o.mesh.position.y != 0 ) o.mesh.position.y = 0;
-			//if (o.mesh.rotation.z != - Math.PI/2) o.mesh.rotation.z = - Math.PI/2; 
-			//if (i == 0){
-				//o.mesh.rotation.z = Math.PI/2;
-				//o.mesh.position.y = this.game.streetRadius;
-				//o.mesh.position.x = this.game.streetRadius;
-				/*if (object == 'PoliceCar'){
-					o.mesh.position.y = this.game.streetRadius - 3.6;
-					o.mesh.position.x = this.game.streetRadius + 3.3;
-				}*/
-			//}
-			/*if (i == 0 && object != 'PoliceCar'){ 
-				o.mesh.position.y = height - 2.0;
-				o.mesh.position.x = this.game.streetRadius;
-			}*/
+
 			o.move();
 			arr.push(o);
 			this.game.collidableArray.push(o.mesh);
