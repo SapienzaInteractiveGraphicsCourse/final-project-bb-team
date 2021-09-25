@@ -167,11 +167,15 @@ export default class IronMan {
 	}
 	
 	moveLeft(){
-		var tween = new TWEEN.Tween(this.mesh.position).to( {x: this.mesh.position.x - 2.0}, 5).start()
+		if(this.mesh.position.x > -20){
+			var tween = new TWEEN.Tween(this.mesh.position).to( {x: this.mesh.position.x - 2.0}, 5).start()
+		}
 	}
 	
 	moveRight(){
-		var tween = new TWEEN.Tween(this.mesh.position).to( {x: this.mesh.position.x + 2.0}, 5).start();
+		if(this.mesh.position.x < 20){
+			var tween = new TWEEN.Tween(this.mesh.position).to( {x: this.mesh.position.x + 2.0}, 5).start();
+		}
 	}
 	
 	jump(){
