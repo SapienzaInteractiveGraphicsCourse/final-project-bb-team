@@ -270,35 +270,38 @@ export default class Game {
 	        	var obstacleBB = this.game.collidableArray[i].geometry.boundingBox.clone();
 		        obstacleBB.applyMatrix4(this.game.collidableArray[i].matrixWorld);
 
-		        console.log(ironmanBB.intersectsBox(obstacleBB));
+		        //console.log(ironmanBB.intersectsBox(obstacleBB));
 		        //console.log(this.game.collidableArray[i].children[0].name);
 
-		        var obstacle = this.game.collidableArray[i].children[0].name;
+		        if(ironmanBB.intersectsBox(obstacleBB)){
 
-		        switch (obstacle) {
-		        	case 'Car':
-                        this.removeEnergy(this.game.carValue);
-                        break;
+			        var obstacle = this.game.collidableArray[i].children[0].name;
 
-                    case 'PoliceCar':
-                        this.removeEnergy(this.game.policeValue);
-                        break;
+			        switch (obstacle) {
+			        	case 'Car':
+	                        this.removeEnergy(this.game.carValue);
+	                        break;
 
-                    case 'Taxi':
-                        this.removeEnergy(this.game.taxiValue);
-                        break;
+	                    case 'PoliceCar':
+	                        this.removeEnergy(this.game.policeValue);
+	                        break;
 
-                    case 'Tesseract':
-                        this.addEnergy(this.game.tesseractValue);
-                        break;
+	                    case 'Taxi':
+	                        this.removeEnergy(this.game.taxiValue);
+	                        break;
 
-                    case 'Reactor':
-                        this.addEnergy(this.game.reactorValue);
-                        break;
+	                    case 'Tesseract':
+	                        this.addEnergy(this.game.tesseractValue);
+	                        break;
 
-                    default:
-                        break;
-		        }
+	                    case 'Reactor':
+	                        this.addEnergy(this.game.reactorValue);
+	                        break;
+
+	                    default:
+	                        break;
+			        }
+			    }
 	        }
 	    }
     }
