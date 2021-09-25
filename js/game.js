@@ -11,12 +11,23 @@ class GameSettings {
 		
 		streetRadius:10.5,
 		streetLength:50,
+
+		isPlaying:false,
 		
-		nCars:3,
-		nPoliceCars:8,
-		nTaxi:5,
+		//nCars:3,
+		nCars:1,
+		//nPoliceCars:8,
+		nPoliceCars:1,
+		//nTaxi:5,
+		nTaxi:1,
 		nTesseracts:4,
 		nReactors:1,
+
+		carValue:5,
+		policeValue:10,
+		taxiValue:20,
+		tesseractValue:30,
+		reactorValue:10,
 		
 		collidableArray:[],
 		carArray:[],
@@ -30,8 +41,6 @@ class GameSettings {
 export default class Game {
 	
 	game = new GameSettings().settings;
-	//distVal = document.getElementById("distValue");
-
 	
 	constructor(scene, camera, renderer, ironman){
 		this.scene = scene;
@@ -100,17 +109,12 @@ export default class Game {
 			
 		//this.obstacleMesh.add(this.carMesh);
 		street.add(this.obstacleMesh);	
-
-		
-		
-		//this.scene.add(this.worldMesh);
-		
-		//var capamerica = new CapAmerica();
-		//capamerica.load(this.scene);
 		
 	}
 	
 	play(){
+
+		this.game.isPlaying = true;
 
 		this.scene.remove(this.scene.getObjectByName("Tesseract"));
 		document.getElementById('loading').style.visibility = "hidden";
@@ -119,17 +123,9 @@ export default class Game {
 		
 		this.scene.add(this.worldMesh);
 		this.ironman.mesh.visible = true;
-		
-		//this.ironman = new IronMan();
-		//this.ironman.load(this.scene);
-		
-		//, (mesh) => {
-			//mesh.children[0].visible = true;
-		//})
-			
+
 		this.camera.position.set(0, 18, 15);
-		//this.camera.lookAt(this.ironman.position)
-		
+
 		
 		var rotationTween1 = new TWEEN.Tween(this.worldMesh.children[0].rotation).to( {x: this.worldMesh.children[0].rotation.x + 2*Math.PI}, 5000).repeat(Infinity).start();
 		
@@ -138,36 +134,40 @@ export default class Game {
 		this.spawnTesseract(this.game.nTesseracts);
 		this.spawnTaxi(this.game.nTaxi);
 		this.spawnReactor(this.game.nReactors);
-			
+		
 	}
 	
 	update(){
 
-		this.ironman.update();
+		//console.log(this.game.isPlaying);
 
+		this.ironman.update();
 		//console.log(this.ironman.ironman.isJumping);
 
-		//this.worldMesh.children[0].rotation.x = this.game.rotationIncrease;
-		//console.log(this.worldMesh.children[0])
+		if(this.game.isPlaying == true){
 
-	    this.game.distance += this.game.distanceIncrease;
-	    //console.log(this.game.distance);
-	    document.getElementById("distValue").innerHTML = Math.floor(this.game.distance);
+			//this.worldMesh.children[0].rotation.x = this.game.rotationIncrease;
 
-	    for (var i=0; i<11; i++) {
-	    	if(this.game.distance > 100*i){
-	    		this.game.level = i+1;
-	    		this.game.distanceIncrease += 0.0001;
-	    		this.game.rotationIncrease += 0.006;
-	    		//console.log(this.game.rotationIncrease)
-	    	}
-	    }
-	    
-	    document.getElementById("levelValue").innerHTML = Math.floor(this.game.level);
+		    this.game.distance += this.game.distanceIncrease;
+		    //console.log(this.game.distance);
+		    document.getElementById("distValue").innerHTML = Math.floor(this.game.distance);
 
-	    this.collisionDetection();
+		    for (var i=0; i<11; i++) {
+		    	if(this.game.distance > 100*i){
+		    		this.game.level = i+1;
+		    		this.game.distanceIncrease += 0.0001;
+		    		this.game.rotationIncrease += 0.006;
+		    		//console.log(this.game.rotationIncrease)
+		    	}
+		    }
+		    
+		    document.getElementById("levelValue").innerHTML = Math.floor(this.game.level);
+
+		    this.collisionDetection();
+		}
 
 	}
+
 	
 	spawnCar(n){
 		this.randomGenerator(this.game.carArray, 'Car', n);
@@ -191,14 +191,12 @@ export default class Game {
 
 	
 	randomGenerator(arr, object, n){
+
 		var a = 2*Math.PI/n;
-		//var height = this.game.streetRadius;
-		//var a;
 		var h = this.game.streetRadius;
 		
 		for (var i=0; i<n; i++){
 			var o;
-			//a = Math.random()*(2*Math.PI);
 			switch (object){
 				
 				case 'Car':
@@ -228,7 +226,6 @@ export default class Game {
 			o.mesh.position.x = Math.cos(a*i)*h;
             o.mesh.position.y = 20 - (Math.random()*40); 
 			o.mesh.position.z = Math.sin(a*i)*h;
-			
 			o.mesh.rotation.y = 2*Math.PI - a*i;
 
 			o.move();
@@ -239,11 +236,80 @@ export default class Game {
 	}
 
 
-	collisionDetection() {
-        // var originPoint = this.ironman.mesh.position.clone();
-        if (this.ironman.ironman.isJumping) return
+	// adjustVertices(arr){
+	// 	var vertices = new Array(8);
+	// 	var vertex = new THREE.Vector3();
+	// 	var start, end;
+	// 	for (var i=0; i<8; i++){
+	// 		start = 3*i;
+	// 		end = start + 3;
+	// 		vertex.add(arr.slice(start, end));
+	// 		vertices[i] = vertex;
+ //  		}
+  
+ //  		return vertices;
+ // 	}
 
-        //console.log(this.ironman.mesh);
-        
+
+	collisionDetection() {
+
+        if (this.ironman.ironman.isJumping) return;
+
+        var nTot = this.game.nCars+this.game.nPoliceCars+this.game.nTaxi+this.game.nTesseracts+this.game.nReactors;
+        //console.log(nTot);
+
+        if(this.game.isPlaying == true){
+
+	        this.ironman.mesh.geometry.boundingBox.applyMatrix4(this.ironman.mesh.matrixWorld);
+
+	        var ironmanBB = this.ironman.mesh.geometry.boundingBox.clone();
+	        ironmanBB.applyMatrix4(this.ironman.mesh.matrixWorld);
+
+	        for (var i = 0;  i < nTot; i++){
+
+	        	var obstacleBB = this.game.collidableArray[i].geometry.boundingBox.clone();
+		        obstacleBB.applyMatrix4(this.game.collidableArray[i].matrixWorld);
+
+		        console.log(ironmanBB.intersectsBox(obstacleBB));
+		        //console.log(this.game.collidableArray[i].children[0].name);
+
+		        var obstacle = this.game.collidableArray[i].children[0].name;
+
+		        switch (obstacle) {
+		        	case 'Car':
+                        this.removeEnergy(this.game.carValue);
+                        break;
+
+                    case 'PoliceCar':
+                        this.removeEnergy(this.game.policeValue);
+                        break;
+
+                    case 'Taxi':
+                        this.removeEnergy(this.game.taxiValue);
+                        break;
+
+                    case 'Tesseract':
+                        this.addEnergy(this.game.tesseractValue);
+                        break;
+
+                    case 'Reactor':
+                        this.addEnergy(this.game.reactorValue);
+                        break;
+
+                    default:
+                        break;
+		        }
+	        }
+	    }
     }
+
+
+	addEnergy(bonus){
+		console.log("Aggiungi Energia")
+	}
+
+	removeEnergy(malus){
+		console.log("Rimuovi Energia")
+	}
+
 }

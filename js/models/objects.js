@@ -5,10 +5,12 @@ import {GLTFLoader} from '../GLTFLoader.js'
 	 
 	 constructor(mesh){
 	 	this.mesh = new THREE.Mesh(
-	 		new THREE.BoxGeometry(2, 2.5, 4),
+	 		new THREE.BoxGeometry(3, 2.5, 4),
 			new THREE.MeshBasicMaterial({wireframe: true, color: 0x000000})
 	 	).add(mesh)
 		this.id = mesh.id;
+
+		this.mesh.geometry.computeBoundingBox();
 	 }
 	 
 	 move(){return}
@@ -36,10 +38,12 @@ import {GLTFLoader} from '../GLTFLoader.js'
  	
 	 constructor(mesh){
 	 	this.mesh = new THREE.Mesh(
-	 		new THREE.BoxGeometry(2.5, 2, 4),
+	 		new THREE.BoxGeometry(3, 2.5, 4),
 	 		new THREE.MeshBasicMaterial({wireframe: true, color: 0x00ff00})
 	 	).add(mesh)
 		this.id = mesh.id;
+
+		this.mesh.geometry.computeBoundingBox();
 	 }
 	 
 	 move(){return}
@@ -66,10 +70,12 @@ import {GLTFLoader} from '../GLTFLoader.js'
 	 
 	constructor(mesh){
 	 	this.mesh = new THREE.Mesh(
-	 		new THREE.BoxGeometry(2, 2.3, 4.5),
+	 		new THREE.BoxGeometry(3, 2.3, 4.5),
 	 		new THREE.MeshBasicMaterial({wireframe: true, color: 0xffff00})
 	 	).add(mesh);
 		this.id = mesh.id;
+
+		this.mesh.geometry.computeBoundingBox();
 	}
  	
 	move(){return}
@@ -99,10 +105,12 @@ import {GLTFLoader} from '../GLTFLoader.js'
   
    	constructor(mesh){
 		 	this.mesh = new THREE.Mesh(
-		 		new THREE.BoxGeometry(7, 1, 1),
+		 		new THREE.BoxGeometry(7.5, 2, 1.5),
 				new THREE.MeshBasicMaterial({wireframe: true, color: 0x0000ff})
 		 	).add(mesh)
 			this.id = mesh.id;
+
+			this.mesh.geometry.computeBoundingBox();
 	 	}
   
    	move(){
@@ -131,15 +139,15 @@ import {GLTFLoader} from '../GLTFLoader.js'
   
    	constructor(mesh){
 		 	this.mesh = new THREE.Mesh(
-		 		new THREE.BoxGeometry(8, 1.3, 1),
+		 		new THREE.BoxGeometry(8.5, 2, 1.5),
 				new THREE.MeshBasicMaterial({wireframe: true, color: 0xffffff})
 		 	).add(mesh)
 			this.id = mesh.id;
+
+			this.mesh.geometry.computeBoundingBox();
 	 	}
   
-   	move(){return
-    	//var tesseractTween = new TWEEN.Tween(this.mesh.children[0].rotation).to({ x: this.mesh.children[0].rotation.x + 2*Math.PI, y: this.mesh.children[0].rotation.y + 2*Math.PI}, 3000).repeat(Infinity).start();
-   	}
+   	move(){return}
   
    	catch (callback){
     	callback();
@@ -153,7 +161,6 @@ import {GLTFLoader} from '../GLTFLoader.js'
 	     		  	mesh.name = 'Reactor';
       		  		mesh.scale.set(0.2, 0.2, 0.2);
 			  		mesh.position.x = 3;
-			  		//mesh.rotation.z = 3*Math.PI/2;
 	     		  	resolve(mesh);
 	    	  }, null, reject);
 	   		});
