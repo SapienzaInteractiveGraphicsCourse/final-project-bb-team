@@ -62,7 +62,7 @@ export default class Game {
 		//var sideTween;
 		//var worldTexture;
 		var loader = new THREE.TextureLoader();
-		loader.load('/textures/street.jpeg', (texture) => {
+		loader.load('textures/street.jpeg', (texture) => {
 			this.worldTexture = texture;
 			this.init();
 			
