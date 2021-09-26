@@ -25,7 +25,7 @@ The final goal is to surivive all the levels, in which the speed gradually incre
 - Three.js
 - Tween.js
 
-## [Live DEMO]
+## [Live DEMO](https://sapienzainteractivegraphicscourse.github.io/final-project-bb-team/)
 
 ## [Documentation]
 
