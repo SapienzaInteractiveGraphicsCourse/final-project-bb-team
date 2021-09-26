@@ -1,5 +1,5 @@
-import {Car, PoliceCar, Taxi, Tesseract, Reactor} from '/models/objects.js'
-import IronMan from '/models/ironman.js'
+import {Car, PoliceCar, Taxi, Tesseract, Reactor} from './models/objects.js'
+import IronMan from './models/ironman.js'
 
 class GameSettings {
 	settings = {
@@ -62,7 +62,7 @@ export default class Game {
 		//var sideTween;
 		//var worldTexture;
 		var loader = new THREE.TextureLoader();
-		loader.load('./textures/street.jpeg', (texture) => {
+		loader.load('../textures/street.jpeg', (texture) => {
 			this.worldTexture = texture;
 			this.init();
 			
