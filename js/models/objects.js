@@ -105,7 +105,7 @@ import {GLTFLoader} from '../GLTFLoader.js'
   
    	constructor(mesh){
 		 	this.mesh = new THREE.Mesh(
-		 		new THREE.BoxGeometry(7.5, 2, 1.5),
+		 		new THREE.BoxGeometry(7.5, 2.3, 1.5),
 				new THREE.MeshBasicMaterial({wireframe: true, color: 0x0000ff})
 		 	).add(mesh)
 			this.id = mesh.id;

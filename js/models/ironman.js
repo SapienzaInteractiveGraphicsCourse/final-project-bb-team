@@ -18,7 +18,7 @@ export default class IronMan {
 		var loader = new GLTFLoader();
 		loader.load('./models/iron_man_mark_46/scene.gltf', object => {
 			this.mesh = new THREE.Mesh(
-                new THREE.BoxGeometry(50, 150, 45),
+                new THREE.BoxGeometry(50, 150, 55),
                 new THREE.MeshBasicMaterial({wireframe: true, color: 0xff0000})
                 //new THREE.MeshBasicMaterial({opacity: 0.5, transparent: true, color: 0xff0000})
             ).add(object.scene);
@@ -182,8 +182,8 @@ export default class IronMan {
 
 		this.ironman.isJumping = true;
         
-        var jumpTween1 = new TWEEN.Tween(this.mesh.position, this.jumpTweens).to({y: this.mesh.position.y + 1.3}, 400).easing(TWEEN.Easing.Quadratic.Out);
-        var jumpTween2 = new TWEEN.Tween(this.mesh.position, this.jumpTweens).to({y: this.mesh.position.y}, 400).easing(TWEEN.Easing.Quadratic.In)
+        var jumpTween1 = new TWEEN.Tween(this.mesh.position, this.jumpTweens).to({y: 6 + 5}, 400).easing(TWEEN.Easing.Quadratic.Out);
+        var jumpTween2 = new TWEEN.Tween(this.mesh.position, this.jumpTweens).to({y: 6}, 400).easing(TWEEN.Easing.Quadratic.In)
 	        .onComplete(() => {
 	                this.ironman.isJumping = false;
 	            })

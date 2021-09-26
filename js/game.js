@@ -8,6 +8,7 @@ class GameSettings {
 		distanceIncrease:0.1,
 		rotationIncrease:2,
 		level:1,
+		energy:500,
 		
 		streetRadius:10.5,
 		streetLength:50,
@@ -24,10 +25,10 @@ class GameSettings {
 		nReactors:1,
 
 		carValue:5,
-		policeValue:10,
-		taxiValue:20,
-		tesseractValue:30,
-		reactorValue:10,
+		policeValue:7,
+		taxiValue:6,
+		tesseractValue:20,
+		reactorValue:15,
 		
 		collidableArray:[],
 		carArray:[],
@@ -71,7 +72,8 @@ export default class Game {
 			document.addEventListener("keydown", (event) => {
 				switch (event.key) {
 					case 'Enter':
-						this.play();
+						if(this.game.isPlaying == false)
+							this.play();
 						break;
 					case 'a':
 						this.ironman.moveLeft();
@@ -236,20 +238,6 @@ export default class Game {
 	}
 
 
-	// adjustVertices(arr){
-	// 	var vertices = new Array(8);
-	// 	var vertex = new THREE.Vector3();
-	// 	var start, end;
-	// 	for (var i=0; i<8; i++){
-	// 		start = 3*i;
-	// 		end = start + 3;
-	// 		vertex.add(arr.slice(start, end));
-	// 		vertices[i] = vertex;
- //  		}
-  
- //  		return vertices;
- // 	}
-
 
 	collisionDetection() {
 
@@ -308,11 +296,21 @@ export default class Game {
 
 
 	addEnergy(bonus){
-		console.log("Aggiungi Energia")
+		//console.log("Aggiungi Energia")
+		this.game.energy += bonus;
+		document.getElementById("energyValue").innerHTML = this.game.energy;
 	}
 
 	removeEnergy(malus){
-		console.log("Rimuovi Energia")
+		//console.log("Rimuovi Energia")
+		this.game.energy -= malus;
+		this.game.energy = Math.max(0, this.game.energy);
+		document.getElementById("energyValue").innerHTML = this.game.energy;
+
+		if (this.game.energy == 0) {
+            console.log('Game Over');
+            location.reload();
+        }
 	}
 
 }
