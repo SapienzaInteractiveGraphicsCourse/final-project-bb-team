@@ -15,14 +15,14 @@ class GameSettings {
 
 		isPlaying:false,
 		
-		//nCars:3,
-		nCars:1,
-		//nPoliceCars:8,
-		nPoliceCars:1,
-		//nTaxi:5,
-		nTaxi:1,
-		nTesseracts:4,
-		nReactors:1,
+		nCars:3,
+		//nCars:1,
+		nPoliceCars:8,
+		//nPoliceCars:1,
+		nTaxi:5,
+		//nTaxi:1,
+		nTesseracts:6,
+		nReactors:6,
 
 		carValue:5,
 		policeValue:7,
@@ -122,6 +122,7 @@ export default class Game {
 		document.getElementById('loading').style.visibility = "hidden";
 		document.getElementsByClassName('header')[0].style.visibility = 'visible';
 		document.getElementsByClassName('header')[1].style.visibility = 'visible';
+		document.getElementById('gameover').style.visibility = 'hidden';
 		
 		this.scene.add(this.worldMesh);
 		this.ironman.mesh.visible = true;
@@ -129,7 +130,7 @@ export default class Game {
 		this.camera.position.set(0, 18, 15);
 
 		
-		var rotationTween1 = new TWEEN.Tween(this.worldMesh.children[0].rotation).to( {x: this.worldMesh.children[0].rotation.x + 2*Math.PI}, 5000).repeat(Infinity).start();
+		//var rotationTween1 = new TWEEN.Tween(this.worldMesh.children[0].rotation).to( {x: this.worldMesh.children[0].rotation.x + 2*Math.PI}, 5000).repeat(Infinity).start();
 		
 		this.spawnCar(this.game.nCars);
 		this.spawnPolice(this.game.nPoliceCars);
@@ -148,7 +149,7 @@ export default class Game {
 
 		if(this.game.isPlaying == true){
 
-			//this.worldMesh.children[0].rotation.x = this.game.rotationIncrease;
+			this.worldMesh.children[0].rotation.x = this.game.rotationIncrease;
 
 		    this.game.distance += this.game.distanceIncrease;
 		    //console.log(this.game.distance);
@@ -261,7 +262,7 @@ export default class Game {
 		        //console.log(ironmanBB.intersectsBox(obstacleBB));
 		        //console.log(this.game.collidableArray[i].children[0].name);
 
-		        if(ironmanBB.intersectsBox(obstacleBB)){
+		        if (ironmanBB.intersectsBox(obstacleBB)){
 
 			        var obstacle = this.game.collidableArray[i].children[0].name;
 
@@ -308,8 +309,11 @@ export default class Game {
 		document.getElementById("energyValue").innerHTML = this.game.energy;
 
 		if (this.game.energy == 0) {
-            console.log('Game Over');
-            location.reload();
+            //console.log('Game Over');
+			//location.reload();
+			document.getElementById('gameover').style.visibility = 'visible';
+			setTimeout(function(){location.reload()}, 3000);
+            
         }
 	}
 

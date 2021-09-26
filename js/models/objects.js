@@ -6,7 +6,7 @@ import {GLTFLoader} from '../GLTFLoader.js'
 	 constructor(mesh){
 	 	this.mesh = new THREE.Mesh(
 	 		new THREE.BoxGeometry(3, 2.5, 4),
-			new THREE.MeshBasicMaterial({wireframe: true, color: 0x000000})
+			new THREE.MeshBasicMaterial({opacity: 0.0, transparent: true})
 	 	).add(mesh)
 		this.id = mesh.id;
 
@@ -39,7 +39,7 @@ import {GLTFLoader} from '../GLTFLoader.js'
 	 constructor(mesh){
 	 	this.mesh = new THREE.Mesh(
 	 		new THREE.BoxGeometry(3, 2.5, 4),
-	 		new THREE.MeshBasicMaterial({wireframe: true, color: 0x00ff00})
+	 		new THREE.MeshBasicMaterial({opacity: 0.0, transparent: true})
 	 	).add(mesh)
 		this.id = mesh.id;
 
@@ -71,7 +71,7 @@ import {GLTFLoader} from '../GLTFLoader.js'
 	constructor(mesh){
 	 	this.mesh = new THREE.Mesh(
 	 		new THREE.BoxGeometry(3, 2.3, 4.5),
-	 		new THREE.MeshBasicMaterial({wireframe: true, color: 0xffff00})
+	 		new THREE.MeshBasicMaterial({opacity: 0.0, transparent: true})
 	 	).add(mesh);
 		this.id = mesh.id;
 
@@ -105,8 +105,8 @@ import {GLTFLoader} from '../GLTFLoader.js'
   
    	constructor(mesh){
 		 	this.mesh = new THREE.Mesh(
-		 		new THREE.BoxGeometry(7.5, 2.3, 1.5),
-				new THREE.MeshBasicMaterial({wireframe: true, color: 0x0000ff})
+		 		new THREE.BoxGeometry(7, 2.3, 1.5),
+				new THREE.MeshBasicMaterial({opacity: 0.0, transparent: true})
 		 	).add(mesh)
 			this.id = mesh.id;
 
@@ -128,7 +128,7 @@ import {GLTFLoader} from '../GLTFLoader.js'
 	     		  	var mesh = object.scene;
 	     		  	mesh.name = 'Tesseract';
       		  		mesh.scale.set(.005, .005, .005);
-			  		mesh.position.x = 3;
+			  		mesh.position.x = 4.3;
 	     		  	resolve(mesh);
 	    	  }, null, reject);
 	   		});
@@ -140,7 +140,7 @@ import {GLTFLoader} from '../GLTFLoader.js'
    	constructor(mesh){
 		 	this.mesh = new THREE.Mesh(
 		 		new THREE.BoxGeometry(8.5, 2, 1.5),
-				new THREE.MeshBasicMaterial({wireframe: true, color: 0xffffff})
+				new THREE.MeshBasicMaterial({opacity: 0.0, transparent: true})
 		 	).add(mesh)
 			this.id = mesh.id;
 

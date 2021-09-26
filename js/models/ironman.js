@@ -19,8 +19,8 @@ export default class IronMan {
 		loader.load('./models/iron_man_mark_46/scene.gltf', object => {
 			this.mesh = new THREE.Mesh(
                 new THREE.BoxGeometry(50, 150, 55),
-                new THREE.MeshBasicMaterial({wireframe: true, color: 0xff0000})
-                //new THREE.MeshBasicMaterial({opacity: 0.5, transparent: true, color: 0xff0000})
+                //new THREE.MeshBasicMaterial({wireframe: true, color: 0xff0000})
+                new THREE.MeshBasicMaterial({opacity: 0.0, transparent: true})
             ).add(object.scene);
 
             this.mesh.geometry.computeBoundingBox();
