@@ -28,5 +28,4 @@ The final goal is to surivive all the levels, in which the speed gradually incre
 ## [Live DEMO](https://sapienzainteractivegraphicscourse.github.io/final-project-bb-team/)
 Before pressing Enter wait a while for environment loading 
 
-## [Documentation]
 
