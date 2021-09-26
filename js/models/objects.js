@@ -22,7 +22,7 @@ import {GLTFLoader} from '../GLTFLoader.js'
 	 static async load(){
 	 	var loader = new GLTFLoader();
 		return new Promise((resolve, reject) => {
-			loader.load('./models/dirty_car/scene.gltf', object => {
+			loader.load('/models/dirty_car/scene.gltf', object => {
 				var mesh = object.scene;
 	 			mesh.scale.set(.0075, .0075, .0075);
 				mesh.rotation.z = - Math.PI/2;
