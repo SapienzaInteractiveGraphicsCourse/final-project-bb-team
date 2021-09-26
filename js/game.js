@@ -16,11 +16,8 @@ class GameSettings {
 		isPlaying:false,
 		
 		nCars:3,
-		//nCars:1,
 		nPoliceCars:8,
-		//nPoliceCars:1,
 		nTaxi:5,
-		//nTaxi:1,
 		nTesseracts:6,
 		nReactors:6,
 
@@ -65,7 +62,7 @@ export default class Game {
 		//var sideTween;
 		//var worldTexture;
 		var loader = new THREE.TextureLoader();
-		loader.load('./textures/street.jpeg', (texture) => {
+		loader.load('textures/street.jpeg', (texture) => {
 			this.worldTexture = texture;
 			this.init();
 			
