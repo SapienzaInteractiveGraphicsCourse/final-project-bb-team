@@ -1,4 +1,4 @@
-import {Car, PoliceCar, Taxi, Tesseract, Reactor} from 'models/objects.js'
+import {Car, PoliceCar, Taxi, Tesseract, Reactor} from '/models/objects.js'
 import IronMan from './models/ironman.js'
 
 class GameSettings {
